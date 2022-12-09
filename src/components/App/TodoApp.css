@@ -2,15 +2,15 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
-      'Lucida Sans', Arial, sans-serif;
+    font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+      "Lucida Sans", Arial, sans-serif;
   }
   
   body {
     background: linear-gradient(
       90deg,
-      rgba(48, 16, 255, 1) 0%,
-      rgba(100, 115, 255, 1) 100%
+      rgb(184, 226, 239) 0%,
+      rgb(79, 57, 222) 100%
     );
   }
   .todo-app {
@@ -51,6 +51,7 @@
   }
   
   .todo-input {
+    color: brown;
     padding: 14px 32px 14px 16px;
     border-radius: 4px 0 0 4px;
     border: 2px solid rgba(17, 122, 255, 1);
@@ -60,16 +61,17 @@
   
   .todo-button {
     padding: 16px;
+    
     border: none;
     border-radius: 0 4px 4px 0;
     cursor: pointer;
     outline: none;
     background: linear-gradient(
       90deg,
-      rgba(17, 122, 255, 1) 0%,
-      rgba(20, 159, 255, 1) 100%
+      rgb(251, 255, 17) 0%,
+      rgb(208, 19, 19) 100%
     );
-    color: white;
+    color: rgb(255, 255, 255);
     text-transform: capitalize;
   }
   
@@ -84,15 +86,15 @@
     justify-content: space-between;
     align-items: center;
     margin: 4px auto;
-    color: white;
+    color: red;
     background: linear-gradient(
       90deg,
-      rgba(20, 159, 255, 1) 0%,
-      rgba(17, 122, 255, 1) 100%
+      rgb(204, 216, 29) 0%,
+      rgb(209, 120, 36) 100%
     );
     padding: 16px;
     border-radius: 5px;
-    width: 90%;
+    width: 50%;
   }
   
   .iconsContainer {
@@ -108,3 +110,4 @@
     align-self: center;
     background-color: black;
   }
+  
