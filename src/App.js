@@ -5,6 +5,9 @@ import TodoItem from "./components/TodoItem";
 import { supabase } from "./config/supabase";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
+import GetAllTodos from "./services/api/GetAllTodos";
+import InsertTodo from "./services/api/InsertTodo";
+import RemoveTodos from "./services/api/RemoveTodos";
 
 function App() {
   const [todos, setTodos] = useState([]);
@@ -17,21 +20,27 @@ function App() {
   */
   useEffect(() => {
     // side effect
+    GetAllTodos()
+      .then((res) => {
+        if (!!res.code) {
+          toast.error(res.message);
+          return;
+        }
 
-    const getAllTodos = async () => {
-      let { data, error } = await supabase.from("todo").select("*");
-      if (error) return;
-      setTodos(
-        data.sort((a, b) => {
-          const dateA = new Date(a.created_at);
-          const dateB = new Date(b.created_at);
+        setTodos(
+          res.todoList.sort((a, b) => {
+            const dateA = new Date(a.created_at);
+            const dateB = new Date(b.created_at);
 
-          return dateA > dateB ? -1 : 1;
-        })
-      );
-    };
-
-    getAllTodos();
+            return dateA > dateB ? -1 : 1;
+          })
+        );
+      })
+      .catch((err) => {
+        toast.error(err.message);
+        console.log(err);
+      })
+      .finally(() => {});
 
     // clean up function - settimeout - setinterval
     // return () => {}
@@ -40,27 +49,42 @@ function App() {
   }, [getCount]);
 
   const insertTodo = async (text) => {
-    await supabase.from("todo").insert([{ name: text, description: text }]);
-    setGetCount(getCount + 1);
-    toast.success("Thêm công việc thành công!");
+    InsertTodo({ name: text, desc: text })
+      .then((res) => {
+        if (!!res.code) {
+          toast.error(res.message);
+          return;
+        }
+        setGetCount((current) => {
+          return current + 1;
+        });
+
+        toast.success("Thêm thành công công việc: " + text);
+      })
+      .catch((err) => {
+        toast.error(err.message);
+      })
+      .finally(() => {});
   };
-
-  // const addTodo = (text) => {
-  //   let id = 1;
-  //   if (todos.length > 0) {
-  //     id = todos[0].id + 1;
-  //   }
-
-  //   let todo = { id: id, text: text, completed: false };
-  //   let newTodos = [todo, ...todos];
-  //   setTodos(newTodos);
-  // };
 
   const removeTodo = async (id) => {
     // setTodos((curr) => curr.filter((todo) => todo.id !== id));
-    await supabase.from("todo").delete().eq("id", id);
-    setGetCount(getCount + 1);
-    toast.success("Xóa công việc thành công!");
+    RemoveTodos({ id: id })
+      .then((res) => {
+        if (!!res.code) {
+          toast.error(res.message);
+          return;
+        }
+        setGetCount((current) => {
+          return current + 1;
+        });
+
+        toast.success("Xóa công việc: " +  + "Thành công");
+      })
+      .catch((err) => {
+        toast.error(err.message);
+      })
+      
   };
 
   const completeTodo = async (id) => {
