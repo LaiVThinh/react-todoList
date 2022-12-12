@@ -8,6 +8,7 @@ import { ToastContainer, toast } from "react-toastify";
 import GetAllTodos from "./services/api/GetAllTodos";
 import InsertTodo from "./services/api/InsertTodo";
 import RemoveTodos from "./services/api/RemoveTodos";
+import { findByTestId } from "@testing-library/react";
 
 function App() {
   const [todos, setTodos] = useState([]);
@@ -79,12 +80,11 @@ function App() {
           return current + 1;
         });
 
-        toast.success("Xóa công việc: " +  + "Thành công");
+        toast.success("Xóa công việc Thành công");
       })
       .catch((err) => {
         toast.error(err.message);
-      })
-      
+      });
   };
 
   const completeTodo = async (id) => {
